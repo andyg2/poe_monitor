@@ -2,6 +2,9 @@
 
 This Python project monitors IP cameras and power cycles their PoE port via SNMP if they stop responding to ping.
 
+<img width="875" height="492" alt="image" src="https://github.com/user-attachments/assets/786ea511-79f1-4fcf-8a2d-b5ed1e4f0f5a" />
+
+
 ## Features
 
 - Web interface (Flask) to **add/delete cameras**
