@@ -4,7 +4,6 @@ This Python project monitors IP cameras and power cycles their PoE port via SNMP
 
 <img width="875" height="492" alt="image" src="https://github.com/user-attachments/assets/786ea511-79f1-4fcf-8a2d-b5ed1e4f0f5a" />
 
-
 ## Features
 
 - Web interface (Flask) to **add/delete cameras**
@@ -44,10 +43,10 @@ Run the script:
 python poe_monitor.py
 ```
 
-* Web UI: `http://localhost:5000`
-* Add cameras with IP and PoE port index
-* Background monitor pings each camera every 10s (configurable)
-* Power cycles cameras after 3 consecutive ping failures (configurable)
+- Web UI: `http://localhost:5000`
+- Add cameras with IP and PoE port index
+- Background monitor pings each camera every 10s (configurable)
+- Power cycles cameras after 3 consecutive ping failures (configurable)
 
 Press `CTRL+C` to stop.
 
@@ -66,7 +65,7 @@ DB_FILE = "cameras.db"           # SQLite DB file
 
 ## Notes
 
-* Use **Python 3.12** with pysnmp 5.x
+- Use **Python 3.12** with pysnmp 5.x
 
 ## **Background Execution**
 
@@ -78,23 +77,23 @@ You can run the PoE monitor in the background so it starts automatically or runs
 2. Click **Create Task…**
 3. **General** tab:
 
-   * Name: `PoE Camera Monitor`
-   * Select: “Run whether user is logged on or not”
-   * Check: “Run with highest privileges”
+   - Name: `PoE Camera Monitor`
+   - Select: “Run whether user is logged on or not”
+   - Check: “Run with highest privileges”
 4. **Triggers** tab:
 
-   * Click **New…**
-   * Begin the task: **At startup** (or set a schedule)
+   - Click **New…**
+   - Begin the task: **At startup** (or set a schedule)
 5. **Actions** tab:
 
-   * Click **New…**
-   * Action: **Start a program**
-   * Program/script: `C:\Python312\python.exe`
-   * Add arguments: `C:\TEMP\poe_monitor\poe_monitor.py`
-   * Start in: `C:\TEMP\poe_monitor`
+   - Click **New…**
+   - Action: **Start a program**
+   - Program/script: `C:\Python312\python.exe`
+   - Add arguments: `C:\TEMP\poe_monitor\poe_monitor.py`
+   - Start in: `C:\TEMP\poe_monitor`
 6. **Conditions** and **Settings** tabs:
 
-   * Adjust as needed (e.g., “Wake the computer to run this task”)
+   - Adjust as needed (e.g., “Wake the computer to run this task”)
 7. Click **OK** and enter your credentials.
 
 Your script will now run automatically in the background.
