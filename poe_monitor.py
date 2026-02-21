@@ -2,6 +2,7 @@ import subprocess
 import asyncio
 import threading
 import sqlite3
+import logging
 from flask import Flask, request, redirect, render_template_string
 from pysnmp.hlapi.asyncio import (
     SnmpEngine,
@@ -11,17 +12,21 @@ from pysnmp.hlapi.asyncio import (
     ObjectType,
     ObjectIdentity,
     Integer,
-    set_cmd
+    setCmd
 )
 
 # ---------------- CONFIG ----------------
-SWITCH_IP = "192.168.1.10"
+SWITCH_IP = "192.168.2.2"
 COMMUNITY = "private"
 PING_INTERVAL = 10       # seconds
 FAIL_THRESHOLD = 3       # consecutive failures
 POE_OFF_TIME = 10        # seconds to keep PoE off
 
 DB_FILE = "cameras.db"
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
 app = Flask(__name__)
 
 # ---------------- DATABASE ----------------
@@ -57,13 +62,10 @@ def ping_host(ip):
 async def set_poe_state(port_index, state):
     oid = f"1.3.6.1.2.1.105.1.1.1.3.{port_index}"
 
-    # CREATE transport and await it
-    transport = await UdpTransportTarget.create((SWITCH_IP, 161))
-
-    errorIndication, errorStatus, errorIndex, varBinds = await set_cmd(
+    errorIndication, errorStatus, errorIndex, varBinds = await setCmd(
         SnmpEngine(),
         CommunityData(COMMUNITY),
-        transport,
+        UdpTransportTarget((SWITCH_IP, 161)),  # ← NO await, NO .create()
         ContextData(),
         ObjectType(ObjectIdentity(oid), Integer(state))
     )
@@ -144,7 +146,9 @@ if __name__ == "__main__":
 
     # Run asyncio monitor in a separate thread
     def start_asyncio_loop():
-        asyncio.run(monitor_loop())
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(monitor_loop())
 
     thread = threading.Thread(target=start_asyncio_loop, daemon=True)
     thread.start()

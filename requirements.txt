@@ -1,2 +1,2 @@
 Flask==2.3.3
-pysnmp==5.1.3
+pysnmp==5.1.0
