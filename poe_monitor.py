@@ -3,6 +3,8 @@ import asyncio
 import threading
 import sqlite3
 import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 from flask import Flask, request, redirect, render_template_string
 from pysnmp.hlapi.asyncio import (
     SnmpEngine,
@@ -16,17 +18,13 @@ from pysnmp.hlapi.asyncio import (
 )
 
 # ---------------- CONFIG ----------------
-SWITCH_IP = "192.168.2.2"
+SWITCH_IP = "192.168.2.13"
 COMMUNITY = "private"
 PING_INTERVAL = 10       # seconds
 FAIL_THRESHOLD = 3       # consecutive failures
 POE_OFF_TIME = 10        # seconds to keep PoE off
 
 DB_FILE = "cameras.db"
-
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
-
 app = Flask(__name__)
 
 # ---------------- DATABASE ----------------

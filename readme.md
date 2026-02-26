@@ -24,9 +24,6 @@ This Python project monitors IP cameras and power cycles their PoE port via SNMP
 2. Create a virtual environment:
 
 ```bash
-
-# C:\Users\VAS\AppData\Local\Programs\Python\Python314\python.exe -m venv venv
-
 python -m venv venv
 venv\Scripts\activate   # Windows
 source venv/bin/activate # Linux/macOS
